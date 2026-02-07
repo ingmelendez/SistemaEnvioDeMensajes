@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WhatsApp Sender Pro - Dark Safe</title>
+    <title>WhatsApp Sender Pro - Personalizado</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -12,26 +12,20 @@
         /* --- 1. VARIABLES (POR DEFECTO MODO OSCURO) --- */
         :root {
             --primary: #25D366;
-            --primary-dark: #34B7F1; /* Azulito WA Business para contraste oscuro */
+            --primary-dark: #34B7F1;
             
-            /* Colores Base Oscuros */
-            --bg: #111827;           /* Fondo casi negro */
-            --surface: #1f2937;      /* Gris oscuro para tarjetas */
-            --text-main: #f9fafb;    /* Texto blanco */
-            --text-sec: #9ca3af;     /* Texto gris claro */
-            --border: #374151;       /* Bordes grises oscuros */
-            --input-bg: #374151;     /* Fondo de inputs */
-            
-            /* Colores de Variantes (Versión Oscura - Menos brillosos) */
-            --color-a: #1e3a8a; --border-a: #60a5fa; /* Azul oscuro */
-            --color-b: #581c87; --border-b: #c084fc; /* Morado oscuro */
-            --color-c: #7c2d12; --border-c: #fb923c; /* Naranja oscuro */
+            --bg: #111827;           
+            --surface: #1f2937;      
+            --text-main: #f9fafb;    
+            --text-sec: #9ca3af;     
+            --border: #374151;       
+            --input-bg: #374151;     
             
             --sent-bg: #111827;
             --sent-text: #6b7280;
         }
 
-        /* --- 2. VARIABLES MODO CLARO (CLASE .light-mode) --- */
+        /* --- 2. VARIABLES MODO CLARO --- */
         body.light-mode {
             --primary: #25D366;
             --primary-dark: #128C7E;
@@ -42,11 +36,6 @@
             --text-sec: #6b7280;
             --border: #d1d5db;
             --input-bg: #f9fafb;
-            
-            /* Colores de Variantes (Versión Clara - Pasteles) */
-            --color-a: #e0f2fe; --border-a: #3b82f6;
-            --color-b: #f3e8ff; --border-b: #8b5cf6;
-            --color-c: #ffedd5; --border-c: #f97316;
             
             --sent-bg: #e5e7eb;
             --sent-text: #9ca3af;
@@ -66,7 +55,6 @@
 
         .container { width: 100%; max-width: 800px; display: grid; gap: 1.5rem; position: relative; }
         
-        /* Botón Flotante de Tema */
         .theme-toggle {
             position: absolute;
             top: -50px;
@@ -107,17 +95,13 @@
             transition: 0.3s;
         }
 
-        .message-stack { display: flex; flex-direction: column; gap: 15px; }
-        .msg-box { position: relative; padding: 15px; border-radius: 8px; border-left: 5px solid #ccc; background: var(--surface); transition: 0.3s; }
-        
-        /* Variantes de color adaptativas */
-        .msg-box.type-a { border-color: var(--border-a); background-color: var(--color-a); }
-        .msg-box.type-b { border-color: var(--border-b); background-color: var(--color-b); }
-        .msg-box.type-c { border-color: var(--border-c); background-color: var(--color-c); }
-        
-        .msg-label { font-weight: bold; font-size: 0.8rem; margin-bottom: 5px; display: block; text-transform: uppercase; color: var(--text-main); opacity: 0.9; }
-        
-        textarea { min-height: 60px; resize: vertical; border-color: rgba(255,255,255,0.1); }
+        textarea { 
+            min-height: 250px; /* Más alto para tu mensaje largo */
+            resize: vertical; 
+            border-color: rgba(255,255,255,0.1); 
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
         body.light-mode textarea { border-color: rgba(0,0,0,0.1); }
 
         .btn-action { width: 100%; padding: 1rem; background-color: var(--primary); color: #fff; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 1rem; margin-top: 10px; transition: 0.2s; }
@@ -134,27 +118,25 @@
         .numbers-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
 
         .btn-wa { 
+            background-color: var(--input-bg);
+            border: 1px solid var(--primary);
             text-decoration: none; padding: 8px 12px; border-radius: 6px; font-weight: 600; font-size: 0.9rem; 
-            display: inline-flex; align-items: center; gap: 8px; color: white; transition: 0.2s; cursor: pointer; 
+            display: inline-flex; align-items: center; gap: 8px; color: var(--primary); transition: 0.2s; cursor: pointer; 
         }
-        .btn-wa.var-a { background-color: var(--border-a); }
-        .btn-wa.var-b { background-color: var(--border-b); }
-        .btn-wa.var-c { background-color: var(--border-c); }
         
-        .btn-wa:hover { filter: brightness(1.1); transform: scale(1.02); }
+        .btn-wa:hover { background-color: var(--primary); color: white; transform: scale(1.02); }
         
         .btn-wa.sent-state { 
             background-color: var(--sent-bg) !important; 
-            color: var(--sent-text); 
-            border: 1px solid var(--border); 
+            color: var(--sent-text) !important; 
+            border: 1px solid var(--border) !important; 
             pointer-events: none; 
         }
 
-        .variant-tag { background: rgba(0,0,0,0.3); font-size: 0.7rem; padding: 2px 5px; border-radius: 4px; margin-left: 5px; }
-        
         .hidden { display: none; }
+        .tag-info { font-size: 0.8rem; color: var(--text-sec); margin-top: -5px; margin-bottom: 10px; }
 
-        /* --- ESTILOS DEL TEMPORIZADOR DE SEGURIDAD --- */
+        /* --- TEMPORIZADOR --- */
         #safetyOverlay {
             position: fixed; bottom: 0; left: 0; width: 100%; 
             background: #111827; color: white; padding: 20px;
@@ -169,7 +151,7 @@
         
         .cooldown-selector { 
             margin-bottom: 20px; padding: 15px; 
-            background: rgba(239, 68, 68, 0.1); /* Rojo muy transparente */
+            background: rgba(239, 68, 68, 0.1);
             border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.3);
             display: flex; align-items: center; gap: 10px; color: var(--text-main);
         }
@@ -178,12 +160,12 @@
 <body>
 
     <div class="container" id="mainContainer">
-        <button id="themeToggle" class="theme-toggle" title="Cambiar a Modo Claro/Oscuro" onclick="toggleTheme()">
+        <button id="themeToggle" class="theme-toggle" title="Cambiar Tema" onclick="toggleTheme()">
             <i class="fa-solid fa-sun" id="themeIcon"></i>
         </button>
 
         <div class="card">
-            <h1><i class="fa-brands fa-whatsapp"></i> Generador Modo Seguro</h1>
+            <h1><i class="fa-brands fa-whatsapp"></i> Generador Personalizado</h1>
             
             <div class="form-group">
                 <label>1. Cargar Excel</label>
@@ -196,10 +178,10 @@
                     <i class="fa-solid fa-stopwatch" style="color: #ef4444;"></i>
                     <label style="margin:0; cursor: pointer;">Pausa obligatoria (Segundos):</label>
                     <select id="cooldownTime" style="width: 80px; padding: 5px;">
-                        <option value="5">5s (Rápido)</option>
-                        <option value="15" selected>15s (Normal)</option>
-                        <option value="30">30s (Seguro)</option>
-                        <option value="60">60s (Blindado)</option>
+                        <option value="5">5s</option>
+                        <option value="15" selected>15s</option>
+                        <option value="30">30s</option>
+                        <option value="60">60s</option>
                     </select>
                 </div>
 
@@ -209,25 +191,35 @@
                 </div>
 
                 <div class="form-group">
-                    <label>3. Variantes (Se alternan solas)</label>
-                    <div class="message-stack">
-                        <div class="msg-box type-a">
-                            <span class="msg-label" style="color: var(--border-a);">Variante A</span>
-                            <textarea id="msgA" placeholder="Hola [Nombre]..." onkeyup="guardarMensajes()"></textarea>
-                        </div>
-                        <div class="msg-box type-b">
-                            <span class="msg-label" style="color: var(--border-b);">Variante B</span>
-                            <textarea id="msgB" placeholder="Estimado [Nombre]..." onkeyup="guardarMensajes()"></textarea>
-                        </div>
-                        <div class="msg-box type-c">
-                            <span class="msg-label" style="color: var(--border-c);">Variante C</span>
-                            <textarea id="msgC" placeholder="Saludos [Nombre]..." onkeyup="guardarMensajes()"></textarea>
-                        </div>
-                    </div>
+                    <label>3. Mensaje a Enviar</label>
+                    <p class="tag-info">Usa <b>[Nombre]</b> donde quieras que aparezca el nombre del cliente.</p>
+                    
+                    <textarea id="txtMensaje" onkeyup="guardarMensaje()">¡Hola, [Nombre]! 👋
+¡Espero que estés teniendo un excelente día! ☀️
+“Que el Señor te bendiga y te guarde en cada paso que des” 🙏
+
+*BBVA CONTINENTAL* ha activado un *convenio exclusivo* con *ESSALUD*, ofreciendo los *mejores beneficios* para los trabajadores.
+
+💰 *TEA preferencial 9.99%*
+Disponible para: *Préstamos Nuevos* y *Compra de Deuda*
+
+📋 *REQUISITOS:*
+• Última boleta
+• No tener descuento judicial
+
+👥 *BENEFICIARIOS:*
+✅ Personal Nombrado y CAS
+
+⚡ *Evaluación inmediata*
+Contáctame para asesorarte sin compromiso 📞 *927 707 775*
+
+Atentamente,
+*Franco Huiman*
+_Asesor de Convenios – BBVA_</textarea>
                 </div>
 
                 <button class="btn-action" onclick="generarLista()">
-                    <i class="fa-solid fa-shield-halved"></i> Procesar con Seguridad
+                    <i class="fa-solid fa-paper-plane"></i> Generar Envíos
                 </button>
             </div>
         </div>
@@ -247,44 +239,38 @@
     </div>
 
     <script>
-        // --- 0. LÓGICA DE TEMA (DARK MODE) ---
+        // --- 0. LÓGICA DE TEMA ---
         function toggleTheme() {
             const body = document.body;
             const icon = document.getElementById('themeIcon');
-            
             body.classList.toggle('light-mode');
-            
             if(body.classList.contains('light-mode')) {
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
+                icon.classList.replace('fa-sun', 'fa-moon');
                 localStorage.setItem('theme', 'light');
             } else {
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
+                icon.classList.replace('fa-moon', 'fa-sun');
                 localStorage.setItem('theme', 'dark');
             }
         }
-
-        // Cargar preferencia guardada
         if(localStorage.getItem('theme') === 'light') {
             document.body.classList.add('light-mode');
             document.getElementById('themeIcon').classList.replace('fa-sun', 'fa-moon');
         }
 
-        // --- 1. Guardar Mensajes ---
-        function guardarMensajes() {
-            localStorage.setItem('wa_msgA', document.getElementById('msgA').value);
-            localStorage.setItem('wa_msgB', document.getElementById('msgB').value);
-            localStorage.setItem('wa_msgC', document.getElementById('msgC').value);
+        // --- 1. Guardar Mensaje Único ---
+        function guardarMensaje() {
+            localStorage.setItem('wa_mensaje_unico', document.getElementById('txtMensaje').value);
         }
+        
+        // --- Cargar Preferencias al inicio ---
         window.onload = function() {
-            if(localStorage.getItem('theme') === 'light') { // Check doble por si acaso
+            if(localStorage.getItem('theme') === 'light') {
                  document.body.classList.add('light-mode');
                  document.getElementById('themeIcon').classList.replace('fa-sun', 'fa-moon');
             }
-            if(localStorage.getItem('wa_msgA')) document.getElementById('msgA').value = localStorage.getItem('wa_msgA');
-            if(localStorage.getItem('wa_msgB')) document.getElementById('msgB').value = localStorage.getItem('wa_msgB');
-            if(localStorage.getItem('wa_msgC')) document.getElementById('msgC').value = localStorage.getItem('wa_msgC');
+            if(localStorage.getItem('wa_mensaje_unico')) {
+                document.getElementById('txtMensaje').value = localStorage.getItem('wa_mensaje_unico');
+            }
         }
 
         // --- 2. Lógica Excel ---
@@ -319,18 +305,21 @@
             });
         }
 
-        // --- 3. Generación y BLOQUEO ---
+        // --- Helper: Convertir a Nombre Propio (Ej: JUAN PEREZ -> Juan Perez) ---
+        function toTitleCase(str) {
+            return str.replace(/\w\S*/g, function(txt){
+                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+            });
+        }
+
+        // --- 3. Generación ÚNICA ---
         let isCooldown = false;
 
         function generarLista() {
             const colNombre = document.getElementById('selectColumnaNombre').value;
-            const mensajes = [
-                { id: 'A', text: document.getElementById('msgA').value, class: 'var-a' },
-                { id: 'B', text: document.getElementById('msgB').value, class: 'var-b' },
-                { id: 'C', text: document.getElementById('msgC').value, class: 'var-c' }
-            ].filter(m => m.text.trim().length > 0);
+            let mensajeBase = document.getElementById('txtMensaje').value;
 
-            if (mensajes.length === 0) { alert("¡Escribe al menos un mensaje en Variante A!"); return; }
+            if (mensajeBase.trim().length === 0) { alert("¡El mensaje está vacío!"); return; }
 
             const lista = document.getElementById('listaResultados');
             lista.innerHTML = ''; 
@@ -338,7 +327,14 @@
             document.getElementById('resultSection').classList.remove('hidden');
 
             datosExcel.forEach((fila, i) => {
-                const nombre = fila[colNombre] || 'Cliente';
+                // Obtener nombre y convertirlo a formato bonito
+                let rawName = String(fila[colNombre] || 'Cliente');
+                let nombreBonito = toTitleCase(rawName);
+
+                // PERSONALIZACIÓN: Reemplazar [Nombre] por el nombre real
+                // .replace hace el cambio. /g asegura que si pusiste [Nombre] dos veces, cambie las dos.
+                let mensajePersonalizado = mensajeBase.replace(/\[Nombre\]/g, nombreBonito);
+
                 let telefonosUnicos = new Set();
                 let botonesData = [];
 
@@ -360,15 +356,13 @@
                 let htmlBotones = '';
                 
                 botonesData.forEach(item => {
-                    const variante = mensajes[Math.floor(Math.random() * mensajes.length)];
                     htmlBotones += `
                         <a href="javascript:void(0)" 
-                           data-url="https://wa.me/${item.numero}?text=${encodeURIComponent(variante.text)}"
-                           class="btn-wa ${variante.class}" 
+                           data-url="https://wa.me/51${item.numero}?text=${encodeURIComponent(mensajePersonalizado)}"
+                           class="btn-wa" 
                            onclick="manejarEnvio(this)">
                             <i class="fa-brands fa-whatsapp"></i> 
                             ${item.numero}
-                            <span class="variant-tag">${variante.id}</span>
                         </a>
                     `;
                 });
@@ -376,7 +370,7 @@
                 div.innerHTML = `
                     <div style="font-weight:bold; color:var(--text-sec);">#${i + 1}</div>
                     <div>
-                        <div style="font-weight:bold; font-size:1.1em; margin-bottom:5px;">${nombre}</div>
+                        <div style="font-weight:bold; font-size:1.1em; margin-bottom:5px;">${nombreBonito}</div>
                         <div class="numbers-container">${htmlBotones}</div>
                     </div>
                 `;
