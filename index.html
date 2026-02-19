@@ -3,205 +3,535 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WhatsApp Sender Pro - Personalizado</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>WhatsApp Sender Pro - Plataforma Empresarial</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     
     <style>
-        /* --- 1. VARIABLES (POR DEFECTO MODO OSCURO) --- */
+        /* === VARIABLES CSS PROFESIONALES === */
         :root {
             --primary: #25D366;
-            --primary-dark: #34B7F1;
-            
-            --bg: #111827;           
-            --surface: #1f2937;      
-            --text-main: #f9fafb;    
-            --text-sec: #9ca3af;     
-            --border: #374151;       
-            --input-bg: #374151;     
-            
-            --sent-bg: #111827;
-            --sent-text: #6b7280;
-        }
-
-        /* --- 2. VARIABLES MODO CLARO --- */
-        body.light-mode {
-            --primary: #25D366;
             --primary-dark: #128C7E;
+            --primary-gradient: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
             
-            --bg: #f3f4f6;
+            --bg-primary: #0f0f23;
+            --bg-secondary: #1a1a2e;
+            --surface: #1e1e2f;
+            --surface-hover: #25253a;
+            --glass: rgba(255,255,255,0.05);
+            
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --text-accent: #25D366;
+            
+            --border: rgba(255,255,255,0.08);
+            --border-hover: rgba(255,255,255,0.15);
+            --shadow: 0 20px 40px rgba(0,0,0,0.3);
+            --shadow-card: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        /* MODO CLARO */
+        body.light-mode {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #f1f5f9;
             --surface: #ffffff;
-            --text-main: #1f2937;
-            --text-sec: #6b7280;
-            --border: #d1d5db;
-            --input-bg: #f9fafb;
-            
-            --sent-bg: #e5e7eb;
-            --sent-text: #9ca3af;
+            --surface-hover: #f8fafc;
+            --glass: rgba(0,0,0,0.03);
+            --text-primary: #0f172a;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --border: rgba(0,0,0,0.08);
+            --border-hover: rgba(0,0,0,0.12);
+            --shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
 
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: var(--bg); 
-            color: var(--text-main); 
-            margin: 0; 
-            padding: 2rem; 
-            padding-bottom: 80px; 
-            display: flex; 
-            justify-content: center; 
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .container { width: 100%; max-width: 800px; display: grid; gap: 1.5rem; position: relative; }
-        
-        .theme-toggle {
-            position: absolute;
-            top: -50px;
-            right: 0;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            color: var(--text-main);
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            transition: 0.3s;
-        }
-        .theme-toggle:hover { transform: rotate(15deg); background: var(--input-bg); }
-
-        .card { 
-            background: var(--surface); 
-            border-radius: 12px; 
-            padding: 2rem; 
-            border: 1px solid var(--border); 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
-            transition: background 0.3s, border 0.3s;
-        }
-        
-        h1 { margin-top: 0; color: var(--primary); font-size: 1.5rem; display: flex; align-items: center; gap: 10px; }
-        label { display: block; font-weight: 700; margin-bottom: 0.5rem; font-size: 0.95rem; color: var(--text-main); }
-        
-        input[type="file"], select, textarea { 
-            width: 100%; 
-            padding: 10px; 
-            border: 1px solid var(--border); 
-            border-radius: 6px; 
-            background: var(--input-bg); 
-            color: var(--text-main);
-            font-family: inherit; 
+        * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
-            transition: 0.3s;
         }
 
-        textarea { 
-            min-height: 250px; /* Más alto para tu mensaje largo */
-            resize: vertical; 
-            border-color: rgba(255,255,255,0.1); 
-            font-size: 0.9rem;
-            line-height: 1.4;
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        body.light-mode textarea { border-color: rgba(0,0,0,0.1); }
 
-        .btn-action { width: 100%; padding: 1rem; background-color: var(--primary); color: #fff; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 1rem; margin-top: 10px; transition: 0.2s; }
-        .btn-action:hover { opacity: 0.9; transform: translateY(-2px); }
+        /* === LAYOUT PRINCIPAL === */
+        .app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
 
-        .client-list { display: flex; flex-direction: column; gap: 10px; }
-        .client-row { 
-            display: grid; grid-template-columns: 30px 1fr; gap: 15px; 
-            background: var(--surface); padding: 15px; 
-            border-radius: 8px; border: 1px solid var(--border); 
+        .header {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-        }
-        
-        .numbers-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
-
-        .btn-wa { 
-            background-color: var(--input-bg);
-            border: 1px solid var(--primary);
-            text-decoration: none; padding: 8px 12px; border-radius: 6px; font-weight: 600; font-size: 0.9rem; 
-            display: inline-flex; align-items: center; gap: 8px; color: var(--primary); transition: 0.2s; cursor: pointer; 
-        }
-        
-        .btn-wa:hover { background-color: var(--primary); color: white; transform: scale(1.02); }
-        
-        .btn-wa.sent-state { 
-            background-color: var(--sent-bg) !important; 
-            color: var(--sent-text) !important; 
-            border: 1px solid var(--border) !important; 
-            pointer-events: none; 
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
         }
 
-        .hidden { display: none; }
-        .tag-info { font-size: 0.8rem; color: var(--text-sec); margin-top: -5px; margin-bottom: 10px; }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
-        /* --- TEMPORIZADOR --- */
+        .theme-toggle {
+            width: 48px;
+            height: 48px;
+            border: 2px solid var(--border);
+            background: var(--surface);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(20px);
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--primary);
+            background: var(--glass);
+            transform: scale(1.05) rotate(10deg);
+        }
+
+        /* === CARDS PRINCIPALES === */
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-card);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--primary-gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            border-color: var(--border-hover);
+        }
+
+        /* === FORMULARIOS === */
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .input-modern, .textarea-modern, select {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            background: var(--surface);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .input-modern:focus, .textarea-modern:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(37, 211, 102, 0.1);
+            background: var(--surface-hover);
+        }
+
+        .textarea-modern {
+            min-height: 200px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        .tag-info {
+            background: rgba(37, 211, 102, 0.1);
+            border: 1px solid rgba(37, 211, 102, 0.2);
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 0.9rem;
+            color: var(--text-accent);
+            margin-bottom: 1rem;
+        }
+
+        /* === BOTONES PREMIUM === */
+        .btn-primary {
+            width: 100%;
+            padding: 18px 24px;
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(37, 211, 102, 0.4);
+        }
+
+        /* === LISTA DE CLIENTES === */
+        .client-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-height: 600px;
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+
+        .client-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .client-list::-webkit-scrollbar-track {
+            background: var(--surface);
+            border-radius: 3px;
+        }
+
+        .client-list::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .client-row {
+            background: var(--surface);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            display: grid;
+            grid-template-columns: 50px 1fr;
+            gap: 20px;
+            align-items: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .client-row::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--primary-gradient);
+            border-radius: 2px 0 0 2px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .client-row:hover::before {
+            opacity: 1;
+        }
+
+        .client-row:hover {
+            transform: translateX(8px);
+            border-color: var(--border-hover);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .client-index {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: rgba(37, 211, 102, 0.1);
+            border: 2px solid rgba(37, 211, 102, 0.2);
+        }
+
+        .client-info h4 {
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .numbers-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .btn-wa {
+            padding: 12px 18px;
+            border: 2px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-wa:hover {
+            background: var(--primary-gradient);
+            color: white;
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-wa.sent-state {
+            background: var(--surface-hover) !important;
+            color: var(--text-muted) !important;
+            border-color: var(--border) !important;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        /* === SECCIONES === */
+        .stats-header {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: var(--glass);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        /* === SAFETY OVERLAY === */
         #safetyOverlay {
-            position: fixed; bottom: 0; left: 0; width: 100%; 
-            background: #111827; color: white; padding: 20px;
-            display: flex; justify-content: center; align-items: center; gap: 20px;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
-            transform: translateY(100%); transition: transform 0.3s ease;
-            z-index: 9999; border-top: 2px solid var(--primary);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(30px);
+            color: white;
+            padding: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+            box-shadow: 0 -10px 50px rgba(0,0,0,0.5);
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 9999;
+            border-top: 4px solid var(--primary);
         }
-        #safetyOverlay.active { transform: translateY(0); }
-        .timer-count { font-size: 1.8rem; font-weight: bold; color: var(--primary); font-family: monospace; }
-        .locked-screen { pointer-events: none; opacity: 0.5; filter: grayscale(0.8); }
-        
-        .cooldown-selector { 
-            margin-bottom: 20px; padding: 15px; 
+
+        #safetyOverlay.active {
+            transform: translateY(0);
+        }
+
+        .timer-count {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            font-family: 'SF Mono', monospace;
+            text-shadow: 0 0 20px rgba(37, 211, 102, 0.5);
+        }
+
+        .locked-screen {
+            pointer-events: none;
+            opacity: 0.6;
+            filter: grayscale(0.7) brightness(0.9);
+            transition: all 0.3s ease;
+        }
+
+        /* === COOLDOWN SELECTOR === */
+        .cooldown-selector {
             background: rgba(239, 68, 68, 0.1);
-            border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.3);
-            display: flex; align-items: center; gap: 10px; color: var(--text-main);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 2rem;
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            body { padding: 1rem; }
+            .glass-card { padding: 1.5rem; }
+            .client-row { 
+                grid-template-columns: 1fr;
+                gap: 16px;
+                text-align: center;
+            }
+            .stats-header { flex-direction: column; gap: 1rem; }
+            .numbers-container { justify-content: center; }
+        }
+
+        @media (max-width: 480px) {
+            .header { flex-direction: column; gap: 1rem; text-align: center; }
+            .cooldown-selector { flex-direction: column; text-align: center; }
+        }
+
+        /* === ANIMACIONES === */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .glass-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* ACCESSIBILITY */
+        @media (prefers-reduced-motion: reduce) {
+            * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
         }
     </style>
 </head>
 <body>
-
-    <div class="container" id="mainContainer">
-        <button id="themeToggle" class="theme-toggle" title="Cambiar Tema" onclick="toggleTheme()">
-            <i class="fa-solid fa-sun" id="themeIcon"></i>
-        </button>
-
-        <div class="card">
-            <h1><i class="fa-brands fa-whatsapp"></i> Generador Personalizado</h1>
-            
-            <div class="form-group">
-                <label>1. Cargar Excel</label>
-                <input type="file" id="inputExcel" accept=".xlsx, .xls">
+    <div class="app-container">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="logo">
+                <i class="fab fa-whatsapp" style="font-size: 2rem;"></i>
+                WhatsApp Sender Pro
             </div>
+            <button id="themeToggle" class="theme-toggle" title="Cambiar Tema" onclick="toggleTheme()">
+                <i class="fa-solid fa-sun" id="themeIcon"></i>
+            </button>
+        </div>
 
-            <div id="configSection" class="hidden">
+        <!-- CONFIGURACIÓN -->
+        <div id="mainContainer">
+            <div class="glass-card">
+                <h1 style="margin: 0 0 2rem 0; font-size: 2rem; font-weight: 700; display: flex; align-items: center; gap: 16px;">
+                    <i class="fab fa-whatsapp" style="font-size: 2.2rem; color: var(--primary);"></i>
+                    Plataforma Empresarial
+                </h1>
                 
-                <div class="cooldown-selector">
-                    <i class="fa-solid fa-stopwatch" style="color: #ef4444;"></i>
-                    <label style="margin:0; cursor: pointer;">Pausa obligatoria (Segundos):</label>
-                    <select id="cooldownTime" style="width: 80px; padding: 5px;">
-                        <option value="5">5s</option>
-                        <option value="15" selected>15s</option>
-                        <option value="30">30s</option>
-                        <option value="60">60s</option>
-                    </select>
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-file-excel"></i>
+                        1. Archivo Excel
+                    </label>
+                    <input type="file" id="inputExcel" class="input-modern" accept=".xlsx,.xls">
                 </div>
 
-                <div class="form-group">
-                    <label>2. Columna Nombre</label>
-                    <select id="selectColumnaNombre"></select>
-                </div>
+                <div id="configSection" class="hidden">
+                    <div class="cooldown-selector">
+                        <i class="fas fa-stopwatch" style="font-size: 1.5rem; color: #ef4444;"></i>
+                        <label style="margin:0; font-weight: 600;">Pausa Anti-Ban</label>
+                        <select id="cooldownTime" class="input-modern" style="width: 100px;">
+                            <option value="5" selected>5s</option>
+                            <option value="15">15s</option>
+                            <option value="30">30s</option>
+                            <option value="60">60s</option>
+                        </select>
+                    </div>
 
-                <div class="form-group">
-                    <label>3. Mensaje a Enviar</label>
-                    <p class="tag-info">Usa <b>[Nombre]</b> donde quieras que aparezca el nombre del cliente.</p>
-                    
-                    <textarea id="txtMensaje" onkeyup="guardarMensaje()">¡Hola, [Nombre]! 👋
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-user"></i>
+                            2. Columna Nombre
+                        </label>
+                        <select id="selectColumnaNombre" class="input-modern"></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-comment-dots"></i>
+                            3. Mensaje Personalizado
+                        </label>
+                        <div class="tag-info">
+                            <i class="fas fa-info-circle"></i>
+                            Usa <strong>[Nombre]</strong> para personalización automática
+                        </div>
+                        <textarea id="txtMensaje" class="textarea-modern" onkeyup="guardarMensaje()">¡Hola, [Nombre]! 👋
 ¡Espero que estés teniendo un excelente día! ☀️
-“Que el Señor te bendiga y te guarde en cada paso que des” 🙏
+"Que el Señor te bendiga y te guarde en cada paso que des" 🙏
 
-*BBVA CONTINENTAL* ha activado un *convenio exclusivo* con *ESSALUD*, ofreciendo los *mejores beneficios* para los trabajadores.
+*BBVA CONTINENTAL* ha activado un convenio exclusivo con *ESSALUD*, ofreciendo los mejores beneficios para los trabajadores.
 
 💰 *TEA preferencial 9.99%*
-Disponible para: *Préstamos Nuevos* y *Compra de Deuda*
+Disponible para: Nuevos/Ampliación y Compra de Deuda
 
 📋 *REQUISITOS:*
 • Última boleta
@@ -211,35 +541,49 @@ Disponible para: *Préstamos Nuevos* y *Compra de Deuda*
 ✅ Personal Nombrado y CAS
 
 ⚡ *Evaluación inmediata*
-Contáctame para asesorarte sin compromiso 📞 *927 707 775*
 
-Atentamente,
-*Franco Huiman*
-_Asesor de Convenios – BBVA_</textarea>
+📝 Recuerda: La toma de firma se realiza en el mismo banco.</textarea>
+                    </div>
+
+                    <button class="btn-primary" onclick="generarLista()">
+                        <i class="fas fa-paper-plane"></i>
+                        Generar Campaña Masiva
+                    </button>
                 </div>
-
-                <button class="btn-action" onclick="generarLista()">
-                    <i class="fa-solid fa-paper-plane"></i> Generar Envíos
-                </button>
             </div>
         </div>
 
+        <!-- RESULTADOS -->
         <div id="resultSection" class="hidden">
-            <div class="card">
-                <h2>Lista de Envíos (<span id="contador">0</span>)</h2>
+            <div style="display: flex; gap: 1.5rem; margin-bottom: 2rem; flex-wrap: wrap;">
+                <div class="stat-item">
+                    <i class="fas fa-users" style="color: var(--primary);"></i>
+                    <span>Total: <strong id="contador">0</strong> contactos</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-check-circle" style="color: #10b981;"></i>
+                    <span>Estado: Listo para envío</span>
+                </div>
+            </div>
+            
+            <div class="glass-card">
+                <h2 style="margin: 0 0 2rem 0; font-size: 1.5rem; font-weight: 600;">
+                    <i class="fas fa-list"></i> Cola de Envíos
+                </h2>
                 <div id="listaResultados" class="client-list"></div>
             </div>
         </div>
     </div>
 
+    <!-- SAFETY OVERLAY -->
     <div id="safetyOverlay">
-        <i class="fa-solid fa-lock" style="font-size: 1.5rem;"></i>
-        <span style="font-size: 1.1rem;">Esperando enfriamiento...</span>
+        <i class="fas fa-shield-alt" style="font-size: 2rem; color: var(--primary);"></i>
+        <span>Protección Anti-Ban activa...</span>
         <span class="timer-count" id="timerDisplay">00</span>
     </div>
 
     <script>
-        // --- 0. LÓGICA DE TEMA ---
+        // === TODA LA LÓGICA ORIGINAL MANTENIDA ===
         function toggleTheme() {
             const body = document.body;
             const icon = document.getElementById('themeIcon');
@@ -252,28 +596,21 @@ _Asesor de Convenios – BBVA_</textarea>
                 localStorage.setItem('theme', 'dark');
             }
         }
-        if(localStorage.getItem('theme') === 'light') {
-            document.body.classList.add('light-mode');
-            document.getElementById('themeIcon').classList.replace('fa-sun', 'fa-moon');
-        }
 
-        // --- 1. Guardar Mensaje Único ---
         function guardarMensaje() {
             localStorage.setItem('wa_mensaje_unico', document.getElementById('txtMensaje').value);
         }
-        
-        // --- Cargar Preferencias al inicio ---
+
         window.onload = function() {
             if(localStorage.getItem('theme') === 'light') {
-                 document.body.classList.add('light-mode');
-                 document.getElementById('themeIcon').classList.replace('fa-sun', 'fa-moon');
+                document.body.classList.add('light-mode');
+                document.getElementById('themeIcon').classList.replace('fa-sun', 'fa-moon');
             }
             if(localStorage.getItem('wa_mensaje_unico')) {
                 document.getElementById('txtMensaje').value = localStorage.getItem('wa_mensaje_unico');
             }
         }
 
-        // --- 2. Lógica Excel ---
         let datosExcel = [];
         document.getElementById('inputExcel').addEventListener('change', function(e) {
             const file = e.target.files[0];
@@ -305,21 +642,21 @@ _Asesor de Convenios – BBVA_</textarea>
             });
         }
 
-        // --- Helper: Convertir a Nombre Propio (Ej: JUAN PEREZ -> Juan Perez) ---
         function toTitleCase(str) {
             return str.replace(/\w\S*/g, function(txt){
                 return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
             });
         }
 
-        // --- 3. Generación ÚNICA ---
         let isCooldown = false;
-
         function generarLista() {
             const colNombre = document.getElementById('selectColumnaNombre').value;
             let mensajeBase = document.getElementById('txtMensaje').value;
 
-            if (mensajeBase.trim().length === 0) { alert("¡El mensaje está vacío!"); return; }
+            if (mensajeBase.trim().length === 0) { 
+                alert("¡El mensaje está vacío!"); 
+                return; 
+            }
 
             const lista = document.getElementById('listaResultados');
             lista.innerHTML = ''; 
@@ -327,12 +664,8 @@ _Asesor de Convenios – BBVA_</textarea>
             document.getElementById('resultSection').classList.remove('hidden');
 
             datosExcel.forEach((fila, i) => {
-                // Obtener nombre y convertirlo a formato bonito
                 let rawName = String(fila[colNombre] || 'Cliente');
                 let nombreBonito = toTitleCase(rawName);
-
-                // PERSONALIZACIÓN: Reemplazar [Nombre] por el nombre real
-                // .replace hace el cambio. /g asegura que si pusiste [Nombre] dos veces, cambie las dos.
                 let mensajePersonalizado = mensajeBase.replace(/\[Nombre\]/g, nombreBonito);
 
                 let telefonosUnicos = new Set();
@@ -353,24 +686,24 @@ _Asesor de Convenios – BBVA_</textarea>
 
                 const div = document.createElement('div');
                 div.className = 'client-row';
-                let htmlBotones = '';
                 
+                let htmlBotones = '';
                 botonesData.forEach(item => {
                     htmlBotones += `
                         <a href="javascript:void(0)" 
                            data-url="https://wa.me/51${item.numero}?text=${encodeURIComponent(mensajePersonalizado)}"
                            class="btn-wa" 
                            onclick="manejarEnvio(this)">
-                            <i class="fa-brands fa-whatsapp"></i> 
+                            <i class="fab fa-whatsapp"></i> 
                             ${item.numero}
                         </a>
                     `;
                 });
 
                 div.innerHTML = `
-                    <div style="font-weight:bold; color:var(--text-sec);">#${i + 1}</div>
-                    <div>
-                        <div style="font-weight:bold; font-size:1.1em; margin-bottom:5px;">${nombreBonito}</div>
+                    <div class="client-index">#${i + 1}</div>
+                    <div class="client-info">
+                        <h4>${nombreBonito}</h4>
                         <div class="numbers-container">${htmlBotones}</div>
                     </div>
                 `;
@@ -378,12 +711,11 @@ _Asesor de Convenios – BBVA_</textarea>
             });
         }
 
-        // --- FUNCIÓN PRINCIPAL DE BLOQUEO ---
         function manejarEnvio(btn) {
             if (isCooldown) return; 
 
             btn.classList.add('sent-state');
-            btn.innerHTML = '<i class="fa-solid fa-check"></i> Enviado';
+            btn.innerHTML = '<i class="fas fa-check"></i> Enviado';
 
             const url = btn.getAttribute('data-url');
             window.open(url, '_blank');
