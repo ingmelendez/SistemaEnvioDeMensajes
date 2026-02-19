@@ -1,189 +1,249 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Sistema en mantenimiento</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body{
-    font-family:'Inter', sans-serif;
-    height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:linear-gradient(135deg,#0f172a,#1e1b4b,#0f172a);
-    background-size:200% 200%;
-    animation:bgMove 12s ease infinite;
-    color:#e2e8f0;
-    overflow:hidden;
+body {
+  font-family: "Inter", sans-serif;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0f172a, #1e1b4b, #0f172a);
+  background-size: 200% 200%;
+  animation: bgMove 12s ease infinite;
+  color: #e2e8f0;
+  overflow: hidden;
+  padding: 20px; /* para evitar que el contenido se pegue a bordes en móviles */
 }
 
-@keyframes bgMove{
-    0%{background-position:0% 50%;}
-    50%{background-position:100% 50%;}
-    100%{background-position:0% 50%;}
+@keyframes bgMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* ICONOS TÉCNICOS DE FONDO */
-.bg-icons{
-    position:absolute;
-    width:100%;
-    height:100%;
-    display:flex;
-    flex-wrap:wrap;
-    align-content:space-around;
-    justify-content:space-around;
-    opacity:0.05;
-    font-size:60px;
-    color:#22d3ee;
-    pointer-events:none;
+.bg-icons {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-around;
+  justify-content: space-around;
+  opacity: 0.05;
+  font-size: 60px;
+  color: #22d3ee;
+  pointer-events: none;
 }
 
 /* TARJETA PRINCIPAL */
-.card{
-    position:relative;
-    width:90%;
-    max-width:650px;
-    padding:60px 50px;
-    background:rgba(255,255,255,0.05);
-    backdrop-filter:blur(18px);
-    border:1px solid rgba(255,255,255,0.08);
-    border-radius:20px;
-    box-shadow:0 0 40px rgba(34,211,238,0.15);
-    text-align:center;
-    animation:float 6s ease-in-out infinite;
+.card {
+  position: relative;
+  width: 90%;
+  max-width: 650px;
+  padding: 60px 50px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  box-shadow: 0 0 40px rgba(34, 211, 238, 0.15);
+  text-align: center;
+  animation: float 6s ease-in-out infinite;
 }
 
-@keyframes float{
-    0%,100%{transform:translateY(0);}
-    50%{transform:translateY(-12px);}
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
 }
 
 /* ILUSTRACIÓN */
-.illustration{
-    margin-bottom:30px;
+.illustration {
+  margin-bottom: 30px;
 }
 
-svg{
-    width:120px;
-    filter:drop-shadow(0 0 15px rgba(34,211,238,0.4));
+svg {
+  width: 120px;
+  max-width: 100%;
+  height: auto;
+  filter: drop-shadow(0 0 15px rgba(34, 211, 238, 0.4));
 }
 
 /* TEXTO */
-h1{
-    font-size:28px;
-    font-weight:600;
-    margin-bottom:15px;
-    letter-spacing:0.5px;
+h1 {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  letter-spacing: 0.5px;
 }
 
-p{
-    font-size:15px;
-    color:#94a3b8;
-    line-height:1.6;
-    margin-bottom:30px;
+p {
+  font-size: 15px;
+  color: #94a3b8;
+  line-height: 1.6;
+  margin-bottom: 30px;
 }
 
 /* BOTÓN */
-.btn{
-    display:inline-block;
-    padding:14px 28px;
-    border-radius:10px;
-    background:linear-gradient(90deg,#22d3ee,#14b8a6);
-    color:#0f172a;
-    font-weight:600;
-    text-decoration:none;
-    transition:all .3s ease;
-    position:relative;
-    overflow:hidden;
+.btn {
+  display: inline-block;
+  padding: 14px 28px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #22d3ee, #14b8a6);
+  color: #0f172a;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.btn:hover{
-    transform:translateY(-3px);
-    box-shadow:0 0 20px rgba(34,211,238,0.6);
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.6);
 }
 
-.btn::after{
-    content:"";
-    position:absolute;
-    width:100%;
-    height:100%;
-    top:0;
-    left:-100%;
-    background:linear-gradient(120deg,transparent,rgba(255,255,255,0.5),transparent);
-    transition:all .6s ease;
+.btn::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: -100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  transition: all 0.6s ease;
 }
 
-.btn:hover::after{
-    left:100%;
+.btn:hover::after {
+  left: 100%;
 }
 
 /* PARTÍCULAS */
-.particle{
-    position:absolute;
-    width:4px;
-    height:4px;
-    background:#22d3ee;
-    border-radius:50%;
-    opacity:0.5;
-    animation:rise 10s linear infinite;
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #22d3ee;
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: rise 10s linear infinite;
 }
 
-@keyframes rise{
-    from{transform:translateY(0);}
-    to{transform:translateY(-120vh);}
+@keyframes rise {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-120vh);
+  }
+}
+
+/* RESPONSIVE */
+
+/* Para pantallas menores o iguales a 600px */
+@media (max-width: 600px) {
+  .card {
+    padding: 40px 25px;
+  }
+  h1 {
+    font-size: 24px;
+  }
+  p {
+    font-size: 14px;
+  }
+  .btn {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+  svg {
+    width: 90px;
+  }
+  .bg-icons {
+    font-size: 40px;
+  }
+}
+
+/* Para pantallas muy pequeñas menores o iguales a 400px */
+@media (max-width: 400px) {
+  .card {
+    padding: 30px 15px;
+  }
+  h1 {
+    font-size: 20px;
+  }
+  p {
+    font-size: 13px;
+  }
+  .btn {
+    padding: 10px 20px;
+    font-size: 13px;
+  }
+  svg {
+    width: 70px;
+  }
+  .bg-icons {
+    font-size: 30px;
+  }
 }
 </style>
 </head>
 <body>
-
-<div class="bg-icons">
+  <div class="bg-icons">
     <div>&lt;/&gt;</div>
     <div>⌘</div>
     <div>⚙</div>
     <div>☁</div>
     <div>{ }</div>
     <div>🗄</div>
-</div>
+  </div>
 
-<div class="particle" style="left:15%; bottom:-10px; animation-duration:12s;"></div>
-<div class="particle" style="left:75%; bottom:-20px; animation-duration:15s;"></div>
-<div class="particle" style="left:45%; bottom:-15px; animation-duration:18s;"></div>
+  <div class="particle" style="left:15%; bottom:-10px; animation-duration:12s;"></div>
+  <div class="particle" style="left:75%; bottom:-20px; animation-duration:15s;"></div>
+  <div class="particle" style="left:45%; bottom:-15px; animation-duration:18s;"></div>
 
-<div class="card">
-
+  <div class="card">
     <div class="illustration">
-        <!-- Ilustración SVG minimalista -->
-        <svg viewBox="0 0 64 64" fill="none">
-            <rect x="8" y="30" width="48" height="20" rx="4" fill="#1e293b"/>
-            <circle cx="32" cy="18" r="8" fill="#22d3ee"/>
-            <rect x="28" y="26" width="8" height="10" fill="#0f172a"/>
-            <line x1="18" y1="36" x2="46" y2="36" stroke="#22d3ee" stroke-width="2"/>
-            <line x1="18" y1="42" x2="40" y2="42" stroke="#14b8a6" stroke-width="2"/>
-        </svg>
+      <!-- Ilustración SVG minimalista -->
+      <svg viewBox="0 0 64 64" fill="none">
+        <rect x="8" y="30" width="48" height="20" rx="4" fill="#1e293b" />
+        <circle cx="32" cy="18" r="8" fill="#22d3ee" />
+        <rect x="28" y="26" width="8" height="10" fill="#0f172a" />
+        <line x1="18" y1="36" x2="46" y2="36" stroke="#22d3ee" stroke-width="2" />
+        <line x1="18" y1="42" x2="40" y2="42" stroke="#14b8a6" stroke-width="2" />
+      </svg>
     </div>
 
     <h1>Sistema en mantenimiento</h1>
 
     <p>
-        Estamos desplegando mejoras y optimizaciones para brindarte 
-        una experiencia más robusta y segura.  
-        Volveremos en breve.
+      Estamos desplegando mejoras y optimizaciones para brindarte una experiencia
+      más robusta y segura. Volveremos en breve.
     </p>
 
     <a href="status.html" class="btn">Ver estado del sistema</a>
-
-
-</div>
-
+  </div>
 </body>
 </html>
