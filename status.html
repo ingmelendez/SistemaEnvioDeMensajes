@@ -1,117 +1,129 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Estado del Sistema</title>
 
 <style>
-body {
+  body {
     margin: 0;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     background: linear-gradient(135deg, #0f172a, #1e293b);
     font-family: 'Segoe UI', sans-serif;
     color: #fff;
-}
+    padding: 20px; /* para evitar que el contenido toque bordes en móviles */
+  }
 
-.card {
-    background: rgba(255,255,255,0.05);
+  .card {
+    background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(12px);
     padding: 40px;
     border-radius: 20px;
     width: 420px;
+    max-width: 100%;
     text-align: center;
-    box-shadow: 0 0 40px rgba(0,0,0,0.4);
-}
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
+  }
 
-.progress-container {
+  .progress-container {
     margin-top: 25px;
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 30px;
     overflow: hidden;
     height: 20px;
-}
+  }
 
-.progress-bar {
+  .progress-bar {
     height: 100%;
     width: 0%;
     background: linear-gradient(90deg, #22c55e, #06b6d4);
     border-radius: 30px;
     transition: width 1s ease-in-out;
-}
+  }
 
-.percentage {
+  .percentage {
     margin-top: 15px;
     font-size: 1.2rem;
     font-weight: bold;
     color: #22c55e;
-}
+  }
 
-.info {
+  .info {
     margin-top: 10px;
     font-size: 0.9rem;
     opacity: 0.7;
-}
+  }
+
+  /* Responsividad */
+  @media (max-width: 480px) {
+    .card {
+      padding: 30px 20px;
+      width: 100%;
+    }
+
+    .percentage {
+      font-size: 1rem;
+    }
+
+    .info {
+      font-size: 0.85rem;
+    }
+  }
 </style>
 </head>
 
 <body>
-
-<div class="card">
+  <div class="card">
     <h1>Estado del Mantenimiento</h1>
     <p>Actualización y optimización de infraestructura en curso.</p>
 
     <div class="progress-container">
-        <div class="progress-bar" id="progressBar"></div>
+      <div class="progress-bar" id="progressBar"></div>
     </div>
 
     <div class="percentage" id="percentageText">10%</div>
     <div class="info">Estamos optimizando el sistema, gracias por tu paciencia.</div>
-</div>
+  </div>
 
-<script>
-let STEP_DURATION = 2 * 60 * 60 * 1000; // 2 horas
-const STEP_PERCENT = 10;
-const INITIAL_PROGRESS = 10; // <-- inicio en 10%
+  <script>
+    const STEP_DURATION = 2 * 60 * 60 * 1000; // 2 horas
+    const STEP_PERCENT = 10;
+    const INITIAL_PROGRESS = 10; // inicio en 10%
 
-// Crear hora inicial si no existe
-if (!localStorage.getItem("maintenanceStart")) {
-    localStorage.setItem("maintenanceStart", Date.now());
-}
+    // Crear hora inicial si no existe
+    if (!localStorage.getItem("maintenanceStart")) {
+      localStorage.setItem("maintenanceStart", Date.now());
+    }
 
-let startTime = parseInt(localStorage.getItem("maintenanceStart"));
+    let startTime = parseInt(localStorage.getItem("maintenanceStart"));
 
-function updateProgress() {
-    const now = Date.now();
-    const diff = now - startTime;
+    function updateProgress() {
+      const now = Date.now();
+      const diff = now - startTime;
 
-    let stepsPassed = Math.floor(diff / STEP_DURATION);
-    let progress = INITIAL_PROGRESS + stepsPassed * STEP_PERCENT;
+      let stepsPassed = Math.floor(diff / STEP_DURATION);
+      let progress = INITIAL_PROGRESS + stepsPassed * STEP_PERCENT;
 
-    if (progress > 100) progress = 100;
-    if (progress < 0) progress = INITIAL_PROGRESS;
+      if (progress > 100) progress = 100;
+      if (progress < INITIAL_PROGRESS) progress = INITIAL_PROGRESS;
 
-    // Reiniciar automáticamente al llegar a 100%
-    if (progress >= 100) {
+      // Reiniciar automáticamente al llegar a 100%
+      if (progress >= 100) {
         localStorage.removeItem("maintenanceStart");
         startTime = Date.now();
         progress = INITIAL_PROGRESS; // vuelve a empezar desde 10%
+      }
+
+      document.getElementById("progressBar").style.width = progress + "%";
+      document.getElementById("percentageText").innerText = progress + "%";
     }
 
-    document.getElementById("progressBar").style.width = progress + "%";
-    document.getElementById("percentageText").innerText = progress + "%";
-}
-
-updateProgress();
-setInterval(updateProgress, 1000); // actualiza cada segundo
-
-</script>
-
-
-
-
+    updateProgress();
+    setInterval(updateProgress, 1000); // actualiza cada segundo
+  </script>
 </body>
 </html>
